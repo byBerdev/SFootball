@@ -1,0 +1,44 @@
+cmake_minimum_required(VERSION 3.22)
+
+project(SFootball)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+add_executable(
+    SFootball
+    main.cpp
+)
+
+
+# SDL2
+find_package(SDL2 REQUIRED)
+
+# OpenGL
+find_package(OpenGL REQUIRED)
+
+# GLM
+find_package(glm REQUIRED)
+
+# Assimp
+find_package(assimp REQUIRED)
+
+
+target_link_libraries(
+    SFootball
+
+    SDL2::SDL2
+    OpenGL::GL
+    glm::glm
+    assimp::assimp
+)
+
+
+# Copiar assets
+add_custom_command(
+    TARGET SFootball POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets
+    $<TARGET_FILE_DIR:SFootball>/assets
+)
